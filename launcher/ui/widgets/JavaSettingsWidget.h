@@ -88,7 +88,7 @@ class JavaSettingsWidget : public QWidget {
     QIcon badIcon;
 
     QGroupBox* m_autoJavaGroupBox = nullptr;
-    QVBoxLayout* m_veriticalJavaLayout = nullptr;
+    QVBoxLayout* m_verticalJavaLayout = nullptr;
     QCheckBox* m_autodetectJavaCheckBox = nullptr;
     QCheckBox* m_autodownloadCheckBox = nullptr;
 

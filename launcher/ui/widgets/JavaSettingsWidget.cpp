@@ -140,18 +140,18 @@ void JavaSettingsWidget::setupUi()
 
     m_autoJavaGroupBox = new QGroupBox(this);
     m_autoJavaGroupBox->setObjectName(QStringLiteral("autoJavaGroupBox"));
-    m_veriticalJavaLayout = new QVBoxLayout(m_autoJavaGroupBox);
-    m_veriticalJavaLayout->setObjectName(QStringLiteral("veriticalJavaLayout"));
+    m_verticalJavaLayout = new QVBoxLayout(m_autoJavaGroupBox);
+    m_verticalJavaLayout->setObjectName(QStringLiteral("veriticalJavaLayout"));
 
     m_autodetectJavaCheckBox = new QCheckBox(m_autoJavaGroupBox);
     m_autodetectJavaCheckBox->setObjectName("autodetectJavaCheckBox");
-    m_veriticalJavaLayout->addWidget(m_autodetectJavaCheckBox);
+    m_verticalJavaLayout->addWidget(m_autodetectJavaCheckBox);
 
     if (BuildConfig.JAVA_DOWNLOADER_ENABLED) {
         m_autodownloadCheckBox = new QCheckBox(m_autoJavaGroupBox);
         m_autodownloadCheckBox->setObjectName("autodownloadCheckBox");
         m_autodownloadCheckBox->setEnabled(false);
-        m_veriticalJavaLayout->addWidget(m_autodownloadCheckBox);
+        m_verticalJavaLayout->addWidget(m_autodownloadCheckBox);
         connect(m_autodetectJavaCheckBox, &QCheckBox::stateChanged, this, [this] {
             m_autodownloadCheckBox->setEnabled(m_autodetectJavaCheckBox->isChecked());
             if (!m_autodetectJavaCheckBox->isChecked())
@@ -271,20 +271,12 @@ QString JavaSettingsWidget::javaPath() const
 
 int JavaSettingsWidget::maxHeapSize() const
 {
-    auto min = m_minMemSpinBox->value();
-    auto max = m_maxMemSpinBox->value();
-    if (max < min)
-        max = min;
-    return max;
+    return std::max(m_minMemSpinBox->value(), m_maxMemSpinBox->value());
 }
 
 int JavaSettingsWidget::minHeapSize() const
 {
-    auto min = m_minMemSpinBox->value();
-    auto max = m_maxMemSpinBox->value();
-    if (min > max)
-        min = max;
-    return min;
+    return std::min(m_minMemSpinBox->value(), m_maxMemSpinBox->value());
 }
 
 bool JavaSettingsWidget::permGenEnabled() const
